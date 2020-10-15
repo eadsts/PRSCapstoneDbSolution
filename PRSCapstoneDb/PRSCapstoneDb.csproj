@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201015163649_added request.cs" />
+    <Compile Remove="Migrations\20201015163649_added request.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.sqlserver" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.tools" Version="3.1.9">
