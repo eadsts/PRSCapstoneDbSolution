@@ -147,11 +147,10 @@ namespace PRSCapstoneDb.Controllers
         }
 
         [HttpGet("{approved}")]
-        public async Task<ActionResult>SetToApproved(Request request)
+        public async Task<IActionResult>RequestSetToApproved(int id, Request request)
         {
             request.Status = "APPROVED";
-            _context.SaveChanges();
-            return true;
+            return await PutRequest(id, request);
         }
     }
 }
