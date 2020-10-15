@@ -14,6 +14,29 @@ namespace PRSCapstoneDb.Data
         {
         }
 
-        public DbSet<PRSCapstoneDb.Models.User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
+
+        //add this fluent api code to make a column unique in a table/class
+        //need to add one for each class - we are doing Customer
+        //there is an index on the code column using HasIndex
+        //need to append with IsUnique to make Code column unique
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>(e =>
+            {
+                e.HasIndex(p => p.Username).IsUnique();
+            });
+            builder.Entity<Vendor>(e =>
+            {
+                e.HasIndex(p => p.Code).IsUnique();
+            });
+        }
+
+        //add this fluent api code to make a column unique in a table/class
+        //need to add one for each class - we are doing Customer
+        //there is an index on the code column using HasIndex
+        //need to append with IsUnique to make Code column unique
+        
     }
 }
