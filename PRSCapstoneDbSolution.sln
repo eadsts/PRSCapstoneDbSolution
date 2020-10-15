@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRSCapstoneDb", "PRSCapstoneDb\PRSCapstoneDb.csproj", "{9514B63B-9E7D-4D6E-AB62-507532C42EFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9514B63B-9E7D-4D6E-AB62-507532C42EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9514B63B-9E7D-4D6E-AB62-507532C42EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9514B63B-9E7D-4D6E-AB62-507532C42EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9514B63B-9E7D-4D6E-AB62-507532C42EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C18CC94B-83E0-4FDB-B4A6-577B154B7C13}
+	EndGlobalSection
+EndGlobal
