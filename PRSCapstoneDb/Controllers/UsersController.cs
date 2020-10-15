@@ -22,13 +22,11 @@ namespace PRSCapstoneDb.Controllers
             _context = context;
         }
         //GET: api/username and password
-        //[HttpGet("{username}/{password}")]
-        //public async Task<ActionResult<User>> Login(string username, string password)
-        //{
-        //    var user = await _context.Users.SingleOrDefault();
-        //}
-
-
+        [HttpGet("{username}/{password}")]
+        public async Task<ActionResult<User>> Login(string username, string password)
+        {
+            return await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
+        }
 
         // GET: api/Users
         [HttpGet]

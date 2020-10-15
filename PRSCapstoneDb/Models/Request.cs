@@ -34,7 +34,7 @@ namespace PRSCapstoneDb.Models
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
-        public virtual DbSet<Request> RequestLine {get; set;}
+        public virtual DbSet<RequestLine> RequestLine {get; set;}
 
         public Request()
         {
