@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,6 +33,8 @@ namespace PRSCapstoneDb.Models
 
         public int UserId { get; set; }
         public virtual User User { get; set; }
+
+        public virtual DbSet<Request> RequestLine {get; set;}
 
         public Request()
         {

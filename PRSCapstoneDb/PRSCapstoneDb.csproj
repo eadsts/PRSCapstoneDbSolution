@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201015163649_added request.cs" />
     <Compile Remove="Migrations\20201015163649_added request.Designer.cs" />
+    <Compile Remove="Migrations\20201015180954_added requestline contoller.cs" />
+    <Compile Remove="Migrations\20201015180954_added requestline contoller.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

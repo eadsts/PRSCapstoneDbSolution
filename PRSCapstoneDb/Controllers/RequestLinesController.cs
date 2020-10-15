@@ -12,57 +12,48 @@ namespace PRSCapstoneDb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class RequestLinesController : ControllerBase
     {
         private readonly Context _context;
 
-
-        public UsersController(Context context)
+        public RequestLinesController(Context context)
         {
             _context = context;
         }
-        //GET: api/username and password
-        //[HttpGet("{username}/{password}")]
-        //public async Task<ActionResult<User>> Login(string username, string password)
-        //{
-        //    var user = await _context.Users.SingleOrDefault();
-        //}
 
-
-
-        // GET: api/Users
+        // GET: api/RequestLines
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.RequestLines.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/RequestLines/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<RequestLine>> GetRequestLine(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var requestLine = await _context.RequestLines.FindAsync(id);
 
-            if (user == null)
+            if (requestLine == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return requestLine;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/RequestLines/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutRequestLine(int id, RequestLine requestLine)
         {
-            if (id != user.Id)
+            if (id != requestLine.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(requestLine).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +61,7 @@ namespace PRSCapstoneDb.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!RequestLineExists(id))
                 {
                     return NotFound();
                 }
@@ -83,37 +74,37 @@ namespace PRSCapstoneDb.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/RequestLines
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<RequestLine>> PostRequestLine(RequestLine requestLine)
         {
-            _context.Users.Add(user);
+            _context.RequestLines.Add(requestLine);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetRequestLine", new { id = requestLine.Id }, requestLine);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/RequestLines/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        public async Task<ActionResult<RequestLine>> DeleteRequestLine(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var requestLine = await _context.RequestLines.FindAsync(id);
+            if (requestLine == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.RequestLines.Remove(requestLine);
             await _context.SaveChangesAsync();
 
-            return user;
+            return requestLine;
         }
 
-        private bool UserExists(int id)
+        private bool RequestLineExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.RequestLines.Any(e => e.Id == id);
         }
     }
 }
