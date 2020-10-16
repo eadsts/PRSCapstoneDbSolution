@@ -112,22 +112,23 @@ namespace PRSCapstoneDb.Controllers
             return _context.Requests.Any(e => e.Id == id);
         }
 
-        [HttpPut("toreview/{id}")]
+        //the red text gets passed in after localhost:xxxxx/controller/
+        [HttpPut("review/{id}")]
         public async Task<IActionResult> RequestSetToReview(int id, Request request)
         {
             request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
             return await PutRequest(id, request);
         }
 
-        [HttpPut("{review}")]
-        public async Task<IActionResult> GetRequestsInReview(int id, Request request)
+        [HttpGet("review")]
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int id, Request request)
         {
-            await _context.Requests.Where(r => r.Status == "REVIEW").ToListAsync();
-            return await PutRequest(id, request);
+            return await _context.Requests.Where(r => r.Status == "REVIEW").ToListAsync();
+          
             
         }
 
-        [HttpPut("{rejected}")]
+        [HttpPut("rejected/{id}")]
         public async Task<IActionResult> SetToRejected(int id, Request request)
         {
             request.Status = "REJECTED";
@@ -135,7 +136,7 @@ namespace PRSCapstoneDb.Controllers
               
         }
 
-        [HttpPut("{approved}")]
+        [HttpPut("approved/{id}")]
         public async Task<IActionResult> RequestSetToApproved(int id, Request request)      
         {
             request.Status = "APPROVED";

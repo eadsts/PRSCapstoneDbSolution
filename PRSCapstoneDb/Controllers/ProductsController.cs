@@ -25,14 +25,20 @@ namespace PRSCapstoneDb.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products                                                              
+                .Include(v => v.Vendor)
+                .ToListAsync();
         }
-
+        //reads one product
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            //use include to set a virtual collection to tell EF to fill in virtual vendor for each product
+            //single or default says to only return the one product that I am looking for
+            var product = await _context.Products
+                .Include(v => v.Vendor)
+                .SingleOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
             {
