@@ -45,16 +45,20 @@ namespace PRSCapstoneDb.Controllers
         // PUT: api/Requests/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRequest(int id, Request request)
+        [HttpPut("{id}")]//this id is the id passed in from the user on the web
+        public async Task<IActionResult> PutRequest(int id, Request request)//this id is the id being updated by the user
         {
+            //both ids have to match, so the user doesn't update the wrong id
             if (id != request.Id)
             {
                 return BadRequest();
             }
 
+            //the changes are stored in the cache
             _context.Entry(request).State = EntityState.Modified;
 
+            //if two users are updating at the same time, this catches the mistake and tells the caller
+            //that they didn't do anything wrong, but another user is changing the system
             try
             {
                 await _context.SaveChangesAsync();
@@ -71,6 +75,7 @@ namespace PRSCapstoneDb.Controllers
                 }
             }
 
+            //this method checks for errors, so we don't need to return anything
             return NoContent();
         }
 
@@ -107,34 +112,18 @@ namespace PRSCapstoneDb.Controllers
             return _context.Requests.Any(e => e.Id == id);
         }
 
-        [HttpPut("{total}")]
-        public async Task<ActionResult> RecalculateRequestTotal(int Id)
-        {
-            var request = _context.Requests.Find(Id);
-            var reqTotal = (from rl in _context.RequestLines.ToList()
-                            join pr in _context.Products.ToList()
-                            on rl.ProductId equals pr.Id
-                            where rl.RequestId == Id
-                            select new
-                            {
-                                LineTotal = rl.Quantity * pr.Price
-                            }).Sum(t => t.LineTotal);
-            request.Total = reqTotal;
-            return await _context.SaveChangesAsync();
-           
-        }
-
-        [HttpGet("{toreview}")]
-        public async Task<ActionResult> RequestSetToReview(int id, Request request)
+        [HttpPut("{toreview}")]
+        public async Task<IActionResult> RequestSetToReview(int id, Request request)
         {
             request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
-            return (ActionResult) await PutRequest(id, request);
+            return await PutRequest(id, request);
         }
 
-        [HttpGet("{review}")]
-        public async Task<ActionResult> GetRequestsInReview(Request request)
+        [HttpPut("{review}")]
+        public async Task<IActionResult> GetRequestsInReview(int id, Request request)
         {
-            return await _context.Requests.Where(r => r.Status == "REVIEW").ToList();
+            await _context.Requests.Where(r => r.Status == "REVIEW").ToListAsync();
+            return await PutRequest(id, request);
             
         }
 

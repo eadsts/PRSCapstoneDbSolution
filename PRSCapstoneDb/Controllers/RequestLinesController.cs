@@ -21,6 +21,26 @@ namespace PRSCapstoneDb.Controllers
             _context = context;
         }
 
+        [HttpPut("{total}")]
+        //this don't not have to be async it can be private
+        private async Task<ActionResult> RecalculateRequestTotal(int Id)
+        {
+            var request = _context.Requests.Find(Id);
+            var reqTotal = (from rl in _context.RequestLines.ToList()
+                            join pr in _context.Products.ToList()
+                            on rl.ProductId equals pr.Id
+                            where rl.RequestId == Id
+                            select new
+                            {
+                                LineTotal = rl.Quantity * pr.Price
+                            }).Sum(t => t.LineTotal);
+            request.Total = reqTotal;
+            await _context.SaveChangesAsync();
+            return Ok();
+           
+
+        }
+
         // GET: api/RequestLines
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
