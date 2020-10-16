@@ -20,8 +20,8 @@ namespace PRSCapstoneDb.Controllers
         {
             _context = context;
         }
-
-        [HttpPut("{total}")]
+        //don't need this because we are calling it from the web
+        // [HttpPut("{total}")]
         //this don't not have to be async it can be private
         private async Task<ActionResult> RecalculateRequestTotal(int Id)
         {
