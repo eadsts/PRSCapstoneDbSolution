@@ -112,7 +112,7 @@ namespace PRSCapstoneDb.Controllers
             return _context.Requests.Any(e => e.Id == id);
         }
 
-        [HttpPut("{toreview}")]
+        [HttpPut("toreview/{id}")]
         public async Task<IActionResult> RequestSetToReview(int id, Request request)
         {
             request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
