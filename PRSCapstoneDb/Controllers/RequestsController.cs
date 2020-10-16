@@ -108,7 +108,7 @@ namespace PRSCapstoneDb.Controllers
         }
 
         [HttpPut("{total}")]
-        public async Task<ActionResult>RecalculateRequestTotal(int Id)
+        public async Task<ActionResult> RecalculateRequestTotal(int Id)
         {
             var request = _context.Requests.Find(Id);
             var reqTotal = (from rl in _context.RequestLines.ToList()
@@ -120,34 +120,34 @@ namespace PRSCapstoneDb.Controllers
                                 LineTotal = rl.Quantity * pr.Price
                             }).Sum(t => t.LineTotal);
             request.Total = reqTotal;
-            return await _context.SaveChangesAsync(Id);
+            return await _context.SaveChangesAsync();
            
         }
 
         [HttpGet("{toreview}")]
-        public async Task<ActionResult>RequestSetToReview(int id, Request request)
+        public async Task<ActionResult> RequestSetToReview(int id, Request request)
         {
             request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
-            return await PutRequest(id, request);
+            return (ActionResult) await PutRequest(id, request);
         }
 
         [HttpGet("{review}")]
-        public async Task<ActionResult>GetRequestsInReview(Request request)
+        public async Task<ActionResult> GetRequestsInReview(Request request)
         {
             return await _context.Requests.Where(r => r.Status == "REVIEW").ToList();
             
         }
 
-        [HttpGet("{rejected}")]
-        public async Task<ActionResult>SetToRejected(Request request)
+        [HttpPut("{rejected}")]
+        public async Task<IActionResult> SetToRejected(int id, Request request)
         {
             request.Status = "REJECTED";
-            return await _context.SaveChanges();
+            return await PutRequest(id, request);
               
         }
 
-        [HttpGet("{approved}")]
-        public async Task<IActionResult>RequestSetToApproved(int id, Request request)
+        [HttpPut("{approved}")]
+        public async Task<IActionResult> RequestSetToApproved(int id, Request request)      
         {
             request.Status = "APPROVED";
             return await PutRequest(id, request);
