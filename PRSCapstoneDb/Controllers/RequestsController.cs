@@ -120,14 +120,14 @@ namespace PRSCapstoneDb.Controllers
             return await PutRequest(id, request);
         }
 
-        [HttpGet("review")]
-        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int id, Request request)
+        [HttpGet("review/{Userid}")]
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int Userid, Request request)
         {
-            return await _context.Requests.Where(r => r.Status == "REVIEW").ToListAsync();
+            return await _context.Requests.Where(r => r.Status == "REVIEW" && r.Id != Userid).ToListAsync();
           
             
         }
-
+        
         [HttpPut("rejected/{id}")]
         public async Task<IActionResult> SetToRejected(int id, Request request)
         {
