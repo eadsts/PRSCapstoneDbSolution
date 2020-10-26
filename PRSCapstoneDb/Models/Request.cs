@@ -27,7 +27,6 @@ namespace PRSCapstoneDb.Models
         [Required]
         [StringLength(10)]
         public string Status { get; set; } = "New";
-        [Required]
         [Column(TypeName = "decimal(11,2)")]
         public decimal Total { get; set; } = 0;
 
