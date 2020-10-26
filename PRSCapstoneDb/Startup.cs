@@ -40,7 +40,11 @@ namespace PRSCapstoneDb
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            //need to add this line - it allows any configuration to talk to our backend
+            //origin is a website with an IP address, Method is a function, Header is on any website
+            //which allows a forced authorization to anyone trying to call the website - need to use BCMS 
+            //in the header, for example
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); app.UseRouting();
 
             app.UseAuthorization();
 
