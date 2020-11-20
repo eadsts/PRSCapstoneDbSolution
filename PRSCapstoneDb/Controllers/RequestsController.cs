@@ -25,14 +25,21 @@ namespace PRSCapstoneDb.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequest()
         {
-            return await _context.Requests.ToListAsync();
+            return await _context.Requests.Include(u => u.User).ToListAsync();
         }
 
         // GET: api/Requests/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Request>> GetRequest(int id)
         {
-            var request = await _context.Requests.FindAsync(id);
+            //var request = await _context.Requests.FindAsync(id);
+
+            var request = await _context.Requests
+                                                .Include(u => u.User)
+                                                .Include(u => u.RequestLines)
+                                                .ThenInclude(u => u.Product)
+                                                .SingleOrDefaultAsync(u => u.Id == id);
+
 
             if (request == null)
             {
@@ -123,7 +130,7 @@ namespace PRSCapstoneDb.Controllers
         [HttpGet("review/{Userid}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int Userid, Request request)
         {
-            return await _context.Requests.Where(r => r.Status == "REVIEW" && r.Id != Userid).ToListAsync();
+            return await _context.Requests.Include(u => u.User).Where(r => r.Status == "REVIEW" && r.Id != Userid).ToListAsync();
           
             
         }
@@ -142,5 +149,7 @@ namespace PRSCapstoneDb.Controllers
             request.Status = "APPROVED";
             return await PutRequest(id, request);
         }
+
+
     }
 }
